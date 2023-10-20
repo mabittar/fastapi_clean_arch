@@ -1,7 +1,7 @@
 repos:
 # basic
 -   repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.4.0
+    rev: v4.5.0
     hooks:
     -   id: trailing-whitespace
     -   id: end-of-file-fixer
@@ -18,7 +18,7 @@ repos:
 
 #black
 -   repo: https://github.com/psf/black
-    rev: 23.1.0
+    rev: 23.10.0
     hooks:
     - id: black
       name: black
@@ -38,13 +38,13 @@ repos:
           dist"""
 #autopep8
 -   repo: https://github.com/pre-commit/mirrors-autopep8
-    rev: v2.0.2
+    rev: v2.0.4
     hooks:
     - id: autopep8
 
 #flake8
 -   repo: https://github.com/PyCQA/flake8
-    rev: 6.0.0
+    rev: 6.1.0
     hooks:
     - id: flake8
       name: flake8

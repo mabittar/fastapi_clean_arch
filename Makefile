@@ -24,3 +24,45 @@ run: ## Run local app
 		uvicorn src.main:app --reload; \
 	)
 .PHONY: run
+
+
+setup: venv requirements.txt
+	(\
+		clear; \
+		echo "┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"; \
+		echo " Start LOCAL environment"; \
+		echo "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"; \
+		echo " Check if virtual environment exists or initiate"; \
+		if [ -d ./.venv ]; \
+		then \
+		echo "virtual environment already exists skip initiation"; \
+		else \
+		@echo "virtual environment does not exist start creation" \
+		python -m venv .venv; \
+		fi; \
+		clear; \
+		echo "┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"; \
+		echo " Start virtual environment"; \
+		echo "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"; \
+		source .venv/bin/activate; \
+		echo "┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"; \
+		echo " Install requirements"; \
+		echo "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"; \
+		pip install -r requirements.txt; \
+		echo "┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"; \
+		echo " Install pre-commit"; \
+		echo "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"; \
+		pre-commit install; \
+	)
+.PHONY: setup
+
+tests: ## Run local tests
+	( \
+		source .venv/bin/activate; \
+		clear; \
+		echo "┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"; \
+		echo " Runinng tests"; \
+		echo "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"; \
+		pytest --cov=src; \
+	)
+.PHONY: tests

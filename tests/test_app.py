@@ -22,6 +22,20 @@ class TestApp(unittest.TestCase):
         self.assertEqual(result.status_code, 200)
         self.assertEqual(result.json(), {"message": "Bem-vindo ao FastAPI!"})
 
+    def test_empty_body_must_raise_error(self):
+        invalid_body = {}
+        result = client.post("/items/", json=invalid_body)
+        self.assertEqual(result.status_code , 422)
+
+    def test_body_without_name_must_raise_error(self):
+        invalid_body = {
+            "item_id": 0,
+            "email": "test@example.com"
+        }
+        result = client.post("/items/", json=invalid_body)
+        self.assertEqual(result.status_code , 422)
+
+
     def test_app_post(self):
         item_data = self.make_valid_body()
         result = client.post("/items/", json=item_data)
@@ -31,7 +45,7 @@ class TestApp(unittest.TestCase):
         self.assertEqual(result_response["name"] , item_data['name'])
         self.assertEqual(result_response["email"] , item_data['email'])
 
-    def test_same_itemId_must_raise_error(self):
+    def test_same_itemid_must_raise_error(self):
         item_data = self.make_valid_body()
         client.post("/items/", json=item_data)
         result = client.post("/items/", json=item_data)
@@ -48,7 +62,7 @@ class TestApp(unittest.TestCase):
         self.assertEqual(result_response["email"] , item_data['email'])
 
     def test_get_invaid_item_must_rise_error(self):
-        result = client.get(f"/items/-1")
+        result = client.get("/items/-1")
         self.assertEqual(result.status_code , 404)
 
     def test_delete_item(self):
@@ -61,7 +75,7 @@ class TestApp(unittest.TestCase):
         self.assertEqual(result_response['message'], f"Item {item_id} excluído com sucesso")
 
     def test_delete_invaid_item_must_rise_error(self):
-        result = client.get(f"/items/-1")
+        result = client.get("/items/-1")
         self.assertEqual(result.status_code , 404)
 
     def test_update_item(self):

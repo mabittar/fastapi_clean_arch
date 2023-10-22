@@ -20,12 +20,12 @@ def find_item(item_id):
 
 # Crie uma rota simples
 @app.get("/")
-def read_root():
+async def read_root():
     return {"message": "Bem-vindo ao FastAPI!"}
 
 # Crie uma rota com parâmetros
 @app.get("/items/{item_id}")
-def read_item(item_id: int, query_param: str = None):
+async def read_item(item_id: int, query_param: str = None):
     memory_item = find_item(item_id)
     if not memory_item:
         raise HTTPException(status_code=404, detail="Item not exists")
@@ -33,7 +33,7 @@ def read_item(item_id: int, query_param: str = None):
 
 # Rota de criação de itens
 @app.post("/items/")
-def create_item(item: Item):
+async def create_item(item: Item):
     memory_item = find_item(item.item_id)
     if memory_item:
         raise HTTPException(status_code=400, detail="Item already exists")
@@ -42,7 +42,7 @@ def create_item(item: Item):
 
 # Rota de atualização de itens
 @app.put("/items/{item_id}")
-def update_item(item_id: int, updated_item: Item):
+async def update_item(item_id: int, updated_item: Item):
     memory_item = find_item(item_id)
     if not memory_item:
         raise HTTPException(status_code=404, detail="Item not exists")
@@ -51,7 +51,7 @@ def update_item(item_id: int, updated_item: Item):
 
 # Rota de exclusão de itens
 @app.delete("/items/{item_id}")
-def delete_item(item_id: int):
+async def delete_item(item_id: int):
     memory_item = find_item(item_id)
     if not memory_item:
         raise HTTPException(status_code=404, detail="Item not exists")

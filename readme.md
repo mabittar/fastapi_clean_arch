@@ -60,3 +60,31 @@ make tests
 ```
 
 Esses testes automatizados são a garantia que nossa aplicacão está funcionando e que durante a evolução dela não iremos "quebrar" nada ou que possamos voltar para orignal de funcionamento.
+
+
+## Branch 2-fastapi-stuff
+
+O FastAPI foi o framework escolhido devido a diversas facilidades.
+Como o próprio autor diz: "Apoiado nos ombros de gigantes"
+
+Nessa branch alterei as funções de rotas para utilizar o processamento assíncrono e adicionei uma nova classe ao `src/main.py`, a classe Item.
+
+Essa nova classe herda a propriedades do `BaseModel`, uma classe base do Pydantic, facilitando a criação de documentações interativas, veja um exemplo prático, inicializando a aplicação com:
+
+```shell
+make run
+```
+
+ou simplesmente
+```shel
+uvicorn src/main.py --reload
+```
+
+a partir do navegador web, acesse: `http://127.0.0.1:8000/docs`. Agora podemos interagir com o backend, preparando as requests. 
+
+Observe também, que foram criados dois novos testes, com body inválidos. Essa é outra vantagem de utilizar o Pydantic, automaticamente é criado um json schema e a cada request o body é validado contra esse schema.
+Veja mais em:
+[FastAPI - Body Fields](https://fastapi.tiangolo.com/tutorial/body-fields/)
+[Pydantic - BaseModel](https://docs.pydantic.dev/latest/concepts/models/)
+
+A validação de input utilizando as propriedades do Pydantic é um universo a parte e muito prático no dia a dia. Sugiro que estude conforme necessidades que a sua aplicação apresente.

@@ -88,3 +88,36 @@ Veja mais em:
 [Pydantic - BaseModel](https://docs.pydantic.dev/latest/concepts/models/)
 
 A validação de input utilizando as propriedades do Pydantic é um universo a parte e muito prático no dia a dia. Sugiro que estude conforme necessidades que a sua aplicação apresente.
+
+
+
+
+## # Continuous Development
+
+Da mesma forma que empresas de logística usam contêineres físicos para isolar diferentes cargas para transporte em navios e trens, as tecnologias de desenvolvimento de software cada vez mais usam um conceito chamado de conteinerização.
+
+Um container é:
+- Um caixa invisível em torno do código que foi criado e suas dependências;
+- Possui acesso limitado a sua própria partição do file system e hardware;
+- Apenas necessita de algumas chamadas de sistema para serem criados e iniciados, o mais rápido possível;
+- Apenas precisam do Kernel do Sistema Operacional que suporte container e o runtime do container
+- Escala como PaaS, mas possui a mesma flexibilidade de um IaaS.
+
+Isso faz o código ser ultra portátil, pois o hardware e o sistema operacional podem ser tratados como uma caixa preta (black box)
+
+Um container nada mais é do que um software usado para empacotar e isolar virtualmente aplicativos e suas dependências para permitir maior escalabilidade, disponibilidade e portabilidade em diversos ambientes de computação, incluindo sistemas _bare-metal/machine_, em nuvem, máquinas virtuais (VMs) e alguns sistemas operacionais.
+
+Os containers são executados em ambientes virtuais, geralmente como parte de um sistema de computação em nuvem.
+
+Porém em alguns casos, um único arquivo Docker não é suficiente. Adiante iremos adicionar outros componentes complexo à ao projeto, como um banco de dados. Você pode tentar adicioná-lo diretamente ao Dockerfile ou adicioná-lo por meio de um contêiner adicional. Felizmente, o docker-compose oferece suporte a configurações de vários contêineres gerenciados.
+
+Foram adicionados alguns novos comandos ao arquivo Makefile
+
+```
+make build 
+make compose
+make down
+make stop
+```
+
+Esses comandos serão utilizados para construir a aplicação num container isolado, construir todo o ambiente do projeto, inclusive os demais componentes com o docker-compose. Desmontar a aplicação e parar os containers e componentes em execução.

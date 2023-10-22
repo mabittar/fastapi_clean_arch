@@ -90,8 +90,6 @@ Veja mais em:
 A validação de input utilizando as propriedades do Pydantic é um universo a parte e muito prático no dia a dia. Sugiro que estude conforme necessidades que a sua aplicação apresente.
 
 
-
-
 ## Continuous Development
 
 Da mesma forma que empresas de logística usam contêineres físicos para isolar diferentes cargas para transporte em navios e trens, as tecnologias de desenvolvimento de software cada vez mais usam um conceito chamado de conteinerização.

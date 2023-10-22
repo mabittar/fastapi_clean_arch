@@ -4,6 +4,14 @@ SHELL := bash
 .DELETE_ON_ERROR:
 MAKEFLAGS += --warn-undefined-variables
 MAKEFLAGS += --no-builtin-rules
+PROJECT=fast_clean
+
+# Obtém a tag do último commit
+TAG := $(shell git describe --tags --always --abbrev=6)
+# Nome da imagem Docker com a tag do último commit
+DOCKER_IMAGE_NAME    := ${PROJECT}:${TAG}
+LATEST := ${PROJECT}:latest
+
 
 # Print usage of main targets when user types "make" or "make help"
 
@@ -66,3 +74,43 @@ tests: ## Run local tests
 		pytest --cov=src; \
 	)
 .PHONY: tests
+
+build: ## Build container based on last commit
+	( \
+		clear; \
+		echo "┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"; \
+		echo " Runinng tests"; \
+		echo "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"; \
+		docker build -t $(DOCKER_IMAGE_NAME) . ; \
+	)
+.PHONY: build
+
+compose: ## Start project from docker-compose
+	( \
+	clear; \
+	echo "┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"; \
+	echo " Starting containerized environment"; \
+	echo "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"; \
+	docker-compose -f docker-compose.yml up -d; \
+	)
+.PHONY: compose
+
+stop: ## Stop project from docker-compose
+	( \
+	clear; \
+	echo "┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"; \
+	echo " Stopping containerized environment"; \
+	echo "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"; \
+	docker-compose -f docker-compose.yml stop; \
+	)
+.PHONY: stop
+
+down: ## Stop project from docker-compose
+	( \
+	clear; \
+	echo "┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"; \
+	echo " Down containerized environment"; \
+	echo "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"; \
+	docker-compose -f docker-compose.yml down; \
+	)
+.PHONY: down

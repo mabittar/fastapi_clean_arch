@@ -71,7 +71,7 @@ tests: ## Run local tests
 		echo "┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"; \
 		echo " Runinng tests"; \
 		echo "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"; \
-		pytest --cov=src; \
+		pytest --cov-config=.coveragerc --cov=src ; \
 	)
 .PHONY: tests
 

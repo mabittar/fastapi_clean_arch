@@ -71,7 +71,7 @@ tests: ## Run local tests
 		echo "┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"; \
 		echo " Runinng tests"; \
 		echo "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"; \
-		pytest --cov=src; \
+		pytest --cov-config=.coveragerc --cov=src ; \
 	)
 .PHONY: tests
 
@@ -114,3 +114,16 @@ down: ## Stop project from docker-compose
 	docker-compose -f docker-compose.yml down; \
 	)
 .PHONY: down
+
+lint: ## Lint files and structure using pep8 and sortimports
+	( \
+		source .venv/bin/activate; \
+		clear; \
+		echo "┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"; \
+		echo " Linting APP"; \
+		echo "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"; \
+        flake8 ./src --count --select=E9,F63,F7,F82 --ignore=U100 --show-source --statistics; \
+		black --check -l 120 -t py39 ./src; \
+		isort --force-single-line-imports --line-width 120 --skip **/*__init__.py ./src; \
+	)
+.PHONY: lint

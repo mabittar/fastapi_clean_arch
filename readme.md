@@ -90,8 +90,6 @@ Veja mais em:
 A validação de input utilizando as propriedades do Pydantic é um universo a parte e muito prático no dia a dia. Sugiro que estude conforme necessidades que a sua aplicação apresente.
 
 
-
-
 ## Continuous Development
 
 Da mesma forma que empresas de logística usam contêineres físicos para isolar diferentes cargas para transporte em navios e trens, as tecnologias de desenvolvimento de software cada vez mais usam um conceito chamado de conteinerização.
@@ -121,3 +119,9 @@ make stop
 ```
 
 Esses comandos serão utilizados para construir a aplicação num container isolado, construir todo o ambiente do projeto, inclusive os demais componentes com o docker-compose. Desmontar a aplicação e parar os containers e componentes em execução.
+
+
+## Feature/dto
+
+Para manter a separação de responsabilidades, nessa branch as rotas ou endpoints foram removidos do arquivo principal `src/main.py` e foram remanejadas parauma nova pasta `controller`. Aproveitando os recurosos do FastAPI, foram nomeadas conforme convenção (`v1`).
+O DTO (data transfer object) também foi deslocado para uma pasta inferior dentro do controller/item, assim facilita a edição desse objeto.

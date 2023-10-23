@@ -1,0 +1,23 @@
+[paths]
+source =
+   src/
+
+[run]
+branch = true
+
+[report]
+skip_empty = true
+exclude_also =
+    __init__.py
+    def __repr__
+    if self\.debug
+    raise AssertionError
+    raise NotImplementedError
+    if 0:
+    if __name__ == .__main__.:
+    @(abc\.)?abstractmethod
+
+ignore_errors = True
+
+[html]
+directory = coverage_html_report

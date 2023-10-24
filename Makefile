@@ -127,3 +127,28 @@ lint: ## Lint files and structure using pep8 and sortimports
 		isort --force-single-line-imports --line-width 120 --skip **/*__init__.py ./src; \
 	)
 .PHONY: lint
+
+postgres:  ## Deploy local postgress database container
+	( \
+	clear; \
+		echo " ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"; \
+		echo "  Deploying Postgres Container"; \
+		echo " ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"; \
+		docker run --name postgresserver -p 5432:5432 -e POSTGRES_PASSWORD=postgres -d postgres; \
+		echo "Postgres container deployed. Set envVar to: postgresql://postgres:postgres@localhost/app"; \
+
+	)
+.PHONY: postgres
+
+postgres_stop:  ## Stop local postgres database container
+	( \
+	clear; \
+		echo " ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"; \
+		echo "  Stopping Postgres Container"; \
+		echo " ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"; \
+		docker stop postgresserver || true && docker rm postgresserver || true \
+		echo "Postgres container stopped."; \
+
+	)
+.PHONY: postgres_stop
+

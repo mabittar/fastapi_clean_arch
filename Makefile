@@ -71,7 +71,8 @@ tests: ## Run local tests
 		echo "┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"; \
 		echo " Runinng tests"; \
 		echo "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"; \
-		pytest; \
+		pytest --cov-report term-missing --cov-report html --cov-branch \
+           --cov src; \
 	)
 .PHONY: tests
 
@@ -152,3 +153,19 @@ postgres_stop:  ## Stop local postgres database container
 	)
 .PHONY: postgres_stop
 
+clean: ## Remove unecessary files and folder
+	(\
+	clear; \
+	find . -type f -name '*.py[co]' -delete; \
+	find . -type d -name '__pycache__' -delete; \
+	rm -rf dist; \
+	rm -rf build; \
+	rm -rf *.egg-info; \
+	rm -rf .hypothesis; \
+	rm -rf .pytest_cache; \
+	rm -rf .tox; \
+	rm -f report.xml; \
+	rm -f coverage.xml; \
+	rm -rf coverage_html_report; \
+	)
+.PHONY: clean

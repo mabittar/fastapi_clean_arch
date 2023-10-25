@@ -4,6 +4,8 @@ source =
 
 [run]
 branch = true
+omit = test/* \
+       *\__init__.py 
 
 [report]
 skip_empty = true

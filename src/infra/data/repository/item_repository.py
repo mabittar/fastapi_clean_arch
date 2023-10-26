@@ -4,17 +4,20 @@ from typing import Any, Dict
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from .base_repository import (BaseRepository, CreateSchemaType, ModelType,
-                              UpdateSchemaType)
+from .base_repository import (
+    BaseRepository,
+    CreateSchemaType,
+    ModelType,
+    UpdateSchemaType,
+)
 
 
 class ItemRepositoryDatabase(BaseRepository):
-
     async def get(self, db: AsyncSession, **kwargs) -> ModelType | None:
         query = select(self._model).filter_by(**kwargs)
         result = await db.execute(query)
         return result.scalar_one_or_none()
-    
+
     async def create(self, db: AsyncSession, object: CreateSchemaType) -> ModelType:
         object_dict = object.model_dump()
         db_object = self._model(**object_dict)
@@ -42,6 +45,9 @@ class ItemRepositoryDatabase(BaseRepository):
             await db.commit()
             return db_object
 
-    async def delete(self, session: AsyncSession,) -> None:
+    async def delete(
+        self,
+        session: AsyncSession,
+    ) -> None:
         await session.delete(self._model)
         await session.flush()

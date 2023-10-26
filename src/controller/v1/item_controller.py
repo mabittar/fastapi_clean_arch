@@ -1,20 +1,14 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends
 
-from src.application.usecase import (CreateItemUsecase, ReadItemUsecase,
-                                     UpdateItemUsecase)
+from src.application.usecase import (
+    CreateItemUsecase,
+    ReadItemUsecase,
+    UpdateItemUsecase,
+)
 
 from .schema.item_schema import ItemSchema
 
 item_router = APIRouter(tags=["item"], prefix="/v1")
-
-items = {}
-
-
-def find_item(item_id):
-    try:
-        return items[item_id]
-    except KeyError:
-        return None
 
 
 # Crie uma rota com parâmetros
@@ -30,9 +24,7 @@ async def read_item(
 
 # Rota de criação de itens
 @item_router.post("/items/")
-async def create_item(
-    item: ItemSchema, use_case: CreateItemUsecase = Depends(CreateItemUsecase)
-) -> ItemSchema:
+async def create_item(item: ItemSchema, use_case: CreateItemUsecase = Depends(CreateItemUsecase)) -> ItemSchema:
     item = await use_case.execute(item)
     return item
 
@@ -51,8 +43,8 @@ async def update_item(
 # Rota de exclusão de itens DeleteItemUsecase
 @item_router.delete("/items/{item_id}")
 async def delete_item(
-    item_id: int, 
+    item_id: int,
     use_case: UpdateItemUsecase = Depends(UpdateItemUsecase),
-    ) -> dict[str, str]:
+) -> dict[str, str]:
     await use_case.execute(item_id)
     return {"message": f"Item {item_id} excluído com sucesso"}

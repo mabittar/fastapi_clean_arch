@@ -3,7 +3,11 @@ source =
    src/
 
 [run]
-branch = true
+omit = test/* \
+       *\__init__.py
+branch = True
+parallel = True
+concurrency = thread, greenlet
 
 [report]
 skip_empty = true

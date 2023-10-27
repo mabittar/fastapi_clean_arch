@@ -8,7 +8,7 @@ WORKDIR /app
 RUN python -m pip install --upgrade pip
 # Instale as dependências do aplicativo
 COPY requirements.txt /app
-RUN pip install -r requirements.txt
+RUN pip install --no-cache-dir --upgrade -r requirements.txt
 
 # Copie os arquivos necessários para a imagem
 COPY src /app/src

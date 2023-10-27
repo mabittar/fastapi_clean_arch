@@ -2,19 +2,12 @@
 source =
    src/
 
-[coverage:run]
-omit = test/* \
-       *\__init__.py
-branch = True
-parallel = True
-concurrency = greenlet, thread
-
 [run]
 omit = test/* \
        *\__init__.py
 branch = True
 parallel = True
-concurrency = greenlet, thread
+concurrency = thread, greenlet
 
 [report]
 skip_empty = true

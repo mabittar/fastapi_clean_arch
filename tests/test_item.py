@@ -19,7 +19,7 @@ class TestItem(unittest.TestCase):
             "email": "test@example.com"
             }
     
-    @pytest.mark.anyio
+    @pytest.mark.asyncio
     async def test_empty_body_must_raise_error(self):
         invalid_body = {}
 
@@ -27,7 +27,7 @@ class TestItem(unittest.TestCase):
             result = await ac.post("/v1/items/", json=invalid_body)
         self.assertEqual(result.status_code , 422)
     
-    @pytest.mark.anyio
+    @pytest.mark.asyncio
     async def test_body_without_name_must_raise_error(self):
         invalid_body = {
             "item_id": 0,
@@ -38,7 +38,7 @@ class TestItem(unittest.TestCase):
             result = await ac.post("/v1/items/", json=invalid_body)
         self.assertEqual(result.status_code , 422)
     
-    @pytest.mark.anyio
+    @pytest.mark.asyncio
     async def test_body_invalid_email_must_raise_error(self):
         invalid_body = {
             "item_id": 0,
@@ -50,7 +50,7 @@ class TestItem(unittest.TestCase):
         self.assertEqual(result.status_code , 400)
 
     
-    @pytest.mark.anyio
+    @pytest.mark.asyncio
     async def test_item_post(self):
         item_data = self.make_valid_body()
         async with AsyncClient(app=app, base_url="http://test") as ac:
@@ -61,7 +61,7 @@ class TestItem(unittest.TestCase):
         self.assertEqual(result_response["name"] , item_data['name'])
         self.assertEqual(result_response["email"] , item_data['email'])
 
-    @pytest.mark.anyio
+    @pytest.mark.asyncio
     async def test_same_itemid_must_raise_error(self):
         item_data = self.make_valid_body()
         async with AsyncClient(app=app, base_url="http://test") as ac:
@@ -69,7 +69,7 @@ class TestItem(unittest.TestCase):
             result = await ac.post("/v1/items/", json=item_data)
         self.assertEqual(result.status_code, 400)
 
-    @pytest.mark.anyio
+    @pytest.mark.asyncio
     async def test_get_item(self):
         item_data = self.make_valid_body()
         async with AsyncClient(app=app, base_url="http://test") as ac:
@@ -81,13 +81,13 @@ class TestItem(unittest.TestCase):
             self.assertEqual(result_response["name"] , item_data['name'])
             self.assertEqual(result_response["email"] , item_data['email'])
 
-    @pytest.mark.anyio
+    @pytest.mark.asyncio
     async def test_get_invaid_item_must_rise_error(self):
         async with AsyncClient(app=app, base_url="http://test") as ac:
             result = await ac.get("/v1/items/-1")
             self.assertEqual(result.status_code , 404)
 
-    @pytest.mark.anyio
+    @pytest.mark.asyncio
     async def test_delete_item(self):
         item_data = self.make_valid_body()
         async with AsyncClient(app=app, base_url="http://test") as ac:
@@ -98,13 +98,13 @@ class TestItem(unittest.TestCase):
             result_response = result.json()
             self.assertEqual(result_response['message'], f"Item {item_id} excluído com sucesso")
 
-    @pytest.mark.anyio
+    @pytest.mark.asyncio
     async def test_delete_invaid_item_must_rise_error(self):
         async with AsyncClient(app=app, base_url="http://test") as ac:
             result = await ac.delete("/v1/items/-1")
             self.assertEqual(result.status_code , 404)
 
-    @pytest.mark.anyio
+    @pytest.mark.asyncio
     async def test_update_item(self):
         item_data = self.make_valid_body()
         async with AsyncClient(app=app, base_url="http://test") as ac:
@@ -115,7 +115,7 @@ class TestItem(unittest.TestCase):
             result_response = result.json()
             self.assertEqual(result_response['updated_item']['name'], 'new_name')
 
-    @pytest.mark.anyio
+    @pytest.mark.asyncio
     async def test_update_invalid_body_must_raise_error(self):
         item_data = self.make_valid_body()
         async with AsyncClient(app=app, base_url="http://test") as ac:

@@ -1,4 +1,4 @@
-SHELL := bash
+SHELL = bash
 .ONESHELL:
 .SHELLFLAGS := -eu -o pipefail -c
 .DELETE_ON_ERROR:
@@ -80,7 +80,7 @@ build: ## Build container based on last commit
 	( \
 		clear; \
 		echo "┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"; \
-		echo " Runinng tests"; \
+		echo " Building Docker image"; \
 		echo "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"; \
 		docker build -t $(DOCKER_IMAGE_NAME) . ; \
 	)

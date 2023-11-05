@@ -293,3 +293,11 @@ Destaco que com o isolamento das camadas de domínio, ficou mais simples a execu
 Atenção: Mesmo com testes de integração ou end to end, sem realizar mocks do banco de dados, ou seja, utilizando todos os recursos da aplicação, inclusive um banco de dados em disponível para execução dos testes, foi necessário alterar a cobertura de testes do projeto, pois o framework escolhido utiliza uma API de multiprocessamento para execução do flux assíncrono, enquanto o framework de banco de dados utiliza outra API de multiprocessamento.
 
 É possível ver que esse assunto está em discussões no [GitHub]((https://github.com/nedbat/coveragepy/issues/1082))
+
+
+
+#### Desacoplando os componentes
+
+e Inversão de Dependência, fazendo a classe depender de abstrações (interfaces e/ou classes abstratas) em vez de classes concretas. Isso significa que a classe dependente não tem conhecimento sobre a classe concreta que irá usar, não tem referência ao nome completo da classe das classes das quais depende.
+
+Da mesma forma, ter componentes completamente desacoplados significa que um componente não tem conhecimento direto de nenhum outro componente. Em outras palavras, não faz referência a nenhuma unidade de código refinado de outro componente, nem mesmo interfaces! Isso significa que Injeção de Dependência e Inversão de Dependência não são suficientes para desacoplar componentes, precisaremos de algum tipo de construção arquitetônica. Podemos precisar de eventos, um kernel compartilhado, consistência eventual e até mesmo um serviço de descoberta!
